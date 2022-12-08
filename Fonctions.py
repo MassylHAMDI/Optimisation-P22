@@ -2,7 +2,6 @@
 
 #Importation des bibliothéque:
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 
@@ -54,8 +53,8 @@ def grad(J,DJ, x0, y0, alpha, eps, nmax, param):
     # n nombre d'iteration
     n = 0
     
-    point_X = []
-    point_Y = []
+    point_X = [xn]
+    point_Y = [yn]
     point_Z = []
     
     # tant que dX est plus grand que la précision = eps et qu'on a
@@ -128,7 +127,7 @@ def Newton(J, DJ, HJ, x0, y0, err, n_max, param):
         
         #on incrémente n
         n = n+1
-        print(n)
+        
         
         list = [Liste1,Liste2,Liste3]
         
