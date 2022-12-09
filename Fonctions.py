@@ -17,7 +17,7 @@ def R2(i, param):
     return np.linalg.norm(R(i,param))**2
 
 
-# Fonction qui retourne le gradient de la norme du residi R2
+# Fonction qui retourne le gradient de la norme du residu R2
 def dR2(i,param):
     L1, L2, x, y  = param
     a,b = i[0],i[1]
@@ -40,11 +40,24 @@ def H(i,param):
     
 
 # Méthode de Gradient:
-def grad(J,DJ, x0, y0, alpha, eps, nmax, param):
-    # Xn initialisé à x0
+def grad_fixe(J,DJ, x0, y0, alpha, eps, nmax, param):
+
+    """
+    Notations:
+    J : le carrée de la norme du résidu
+    Dj : le gradient de la norme du résidu
+    Xn et Yn : point initial  l’itération n.
+    dX : pas de déplacement pour une itération.
+    n et nmax : compteur d’itérations et nombre maximal d’itérations autorisé. 
+    X0 et Y0 : point de départ de l’algorithme.
+    alpha :  pas de recherche.
+    eps : : critère de précision.
+
+    """
+    # on initialise Xn à x0
     xn = x0
 
-    # Yn initialisé a y0
+    # on initialise Yn à Y0
     yn = y0
 
     # dX initialisé à 1 pour entrer dans la boucle
@@ -52,35 +65,48 @@ def grad(J,DJ, x0, y0, alpha, eps, nmax, param):
 
     # n nombre d'iteration
     n = 0
+    # Tableau qui contiendra le valeur de x
+    point_X = []
+
+    # Tableau qui contiendra le valeur de x
+    point_Y = []
     
-    point_X = [xn]
-    point_Y = [yn]
-    point_Z = []
     
-    # tant que dX est plus grand que la précision = eps et qu'on a
-    # pas dépassé le num d'itérations
+    # tant que dX est plus grand que la précision = eps
+    # n ne dépasse pas le num d'itérations max notre boucle tourne 
     while (dX > eps and n < nmax):
         
+        # calcule du gradient de la norme du résidu R2 pour les valeurs xn et yn 
         gradx, grady = DJ([xn, yn],param)
+
         f_num = J([xn, yn],param)
         
-        # le nouveau point = point itération précédente - alpha * gradient
+        # Calcule des nouveaux points 
         xn = xn - (alpha * gradx)
         yn = yn - (alpha * grady)
         
         f_res = J([xn, yn],param)
         
+        # On ajoute xn à la liste à chaque iteration
         point_X.append(xn)
-       
+
+        # On ajoute xn à la liste à chaque iteration
         point_Y.append(yn)
         
-        point_Z.append(f_res)
-
+        # Calcule de la nouvelle valeur de dX
         dX = abs(f_res - f_num)
 
         # on incrémente n
         n = n + 1
-    return point_X, point_Y, point_Z
+    
+    # indicateur de convergence 
+    # si notre programme ne converge pas on aura un message d'erreur dans la console principale 
+    if (n >= nmax):
+        print( f"Le programme ne converge pas")
+
+    # on retourne la liste des x et y 
+    # on retourne le nombre d'iteration réaliser 
+    return [point_X, point_Y], n 
 
 
 # Méthode de Newton
