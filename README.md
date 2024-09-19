@@ -5,7 +5,7 @@ Ce projet implémente diverses méthodes numériques pour résoudre des problèm
 ## Structure du Répertoire
 
 - `Fonctions.py` : Contient les fonctions principales pour l'optimisation et les calculs du bras robotique.
-- `Projet_Optimisation_Hamdi_Wang_Mokhbi_Gr...` : (Nom complet tronqué) Contient probablement le notebook ou le script principal du projet.
+- `Projet_Optimisation_Hamdi_Wang_Mokhbi_Gr...` : Contient le script principal du projet.
 
 ## Fonctionnalités
 
